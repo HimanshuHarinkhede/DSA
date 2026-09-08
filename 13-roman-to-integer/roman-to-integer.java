@@ -1,27 +1,23 @@
 class Solution {
     public int romanToInt(String s) {
-        int sum = 0;
+       HashMap<Character, Integer> hm = new HashMap<Character, Integer>();
+     hm.put('I',1);
+     hm.put('V',5);
+     hm.put('X',10);
+     hm.put('L',50);
+     hm.put('C',100);
+     hm.put('D',500);
+     hm.put('M',1000);
 
-        for (int i = 0; i < s.length(); i++) {
-            int curr = getValue(s.charAt(i));
+     int result = hm.get(s.charAt(s.length()-1));
 
-            if (i < s.length() - 1 && curr < getValue(s.charAt(i + 1))) {
-                sum -= curr;
-            } else {
-                sum = sum + curr;
-            }
-        }
-
-        return sum;
-    }
-
-    public int getValue(char ch) {
-        if (ch == 'I') return 1;
-        if (ch == 'V') return 5;
-        if (ch == 'X') return 10;
-        if (ch == 'L') return 50;
-        if (ch == 'C') return 100;
-        if (ch == 'D') return 500;
-        return 1000; // M
+     for(int i = s.length() - 2; i>=0; i--){
+         if(hm.get(s.charAt(i))<hm.get(s.charAt(i+1))){
+             result = result - hm.get(s.charAt(i));
+         } else{
+             result += hm.get(s.charAt(i));
+         }
+     }
+     return result;
     }
 }
